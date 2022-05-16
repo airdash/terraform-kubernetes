@@ -35,6 +35,7 @@ ui:
     type: LoadBalancer
     annotations: |
       'metallb.universe.tf/address-pool': external-pool
+      'external-dns.alpha.kubernetes.io/hostname': consul.sour.ninja
 apiGateway:
   enabled: true
   image: "hashicorp/consul-api-gateway:0.2.0"

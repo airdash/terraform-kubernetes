@@ -6,7 +6,7 @@ resource "kubernetes_manifest" "service_defaults" {
     "kind"       = "ServiceDefaults"
 
     metadata = {
-      "name"      = format("%s-service-defaults", var.service_name)
+      "name"      = var.service_name
       "namespace" = var.namespace
     }
 

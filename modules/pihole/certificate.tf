@@ -1,11 +1,12 @@
 resource "kubernetes_manifest" "pihole_certificate" {
+  count = 0
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind" = "Certificate"
 
     "metadata" = {
       "name" = "pihole-certificate"
-      "namespace" = var.namespace
+      "namespace" = "pihole"
     }
 
     "spec" = {

@@ -16,6 +16,14 @@ variable "namespace" {
   default = "default"
 }
 
+# variable "consul_service_name" {
+#   type = string
+# }
+# 
+# variable "k8s_service_name" {
+#   type = string
+# }
+
 variable "service_name" {
   type = string
 }

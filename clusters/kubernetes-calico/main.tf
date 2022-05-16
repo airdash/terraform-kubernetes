@@ -24,9 +24,10 @@ module "nfs_subdir_external_provisioner" {
 }
 
 module "nginx_consul_mesh_test" {
-  count = 0
+  count = 1
   depends_on = [ module.consul ]
-  source = "../../modules/sample_services/nginx_consul_mesh_test"
+  name = "nginx-test"
+  source = "../../modules/nginx_consul_mesh_test"
 }
 
 module "pihole" {

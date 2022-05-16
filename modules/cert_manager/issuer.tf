@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "cert-manager-r53-issuer" {
-  count = 1
+  count = 0
   depends_on = [ helm_release.cert_manager ]
   manifest = {
     "apiVersion" = "cert-manager.io/v1"

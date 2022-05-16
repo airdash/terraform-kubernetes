@@ -95,7 +95,7 @@ resource "kubernetes_service_account" "nginx_service_account" {
 
 module "consul_service" {
   source = "../../modules/consul_service"
-  service_name = "nginx_consul_mesh_test"
+  service_name = var.name
 }
 
 module "consul_api_gateway" {
@@ -106,8 +106,8 @@ module "consul_api_gateway" {
   metallb_address_pool = "external-pool"
   service_name = var.name
 
-  http_listeners = {
-    hostname = var.name
+  http_listeners = [{
+    hostname = format("%s.%s", var.name, var.domain)
     port = "80"
-  }
+  }]
 }

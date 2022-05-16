@@ -1,0 +1,13 @@
+provider: rfc2136
+logLevel: trace
+
+rfc2136:
+  zone: "sour.ninja"
+  host: "10.50.0.3"
+  txtPrefix: "external-dns-"
+  txtOwnerId: "k8s"
+  secretName: "external-dns-key"
+  tsigKeyname: "externaldns"
+  tsigSecretAlg: "hmac-sha512"
+  tsigAxfr: true
+  minTTL: "60s"

@@ -1,0 +1,5 @@
+.terraform*
+*.tfstate*
+*.sw[o-z]
+*.bak
+modules/sample_services

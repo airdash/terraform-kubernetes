@@ -1,0 +1,42 @@
+replicaCount: 1
+virtualHost: pihole.sour.ninja
+
+persistentVolumeClaim:
+  enabled: true
+  storageClass: nfs-dynamic
+
+serviceDns:
+  mixedService: false
+  loadBalancerIP: 10.50.0.50
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: static-pool
+    metallb.universe.tf/allow-shared-ip: pihole-svc
+
+serviceWeb:
+  http:
+    enabled: false
+  https:
+    enabled: true
+    port: 443
+  type: ClusterIP
+  annotations:
+    metallb.universe.tf/address-pool: external-pool
+    external-dns.alpha.kubernetes.io/hostname: pihole.sour.ninja
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  tls:
+    - secretName: pihole-certificate
+      hosts:
+        - pihole.sour.ninja
+
+serviceDhcp:
+  enabled: false
+
+image:
+  repository: "pihole/pihole"
+  tag: "latest"
+  pullPolicy: "Always"  
+

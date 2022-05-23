@@ -23,13 +23,6 @@ module "nfs_subdir_external_provisioner" {
   source = "../../modules/nfs_subdir_external_provisioner"
 }
 
-module "nginx_consul_mesh_test" {
-  count = 1
-  depends_on = [ module.consul ]
-  name = "nginx-test"
-  source = "../../modules/nginx_consul_mesh_test"
-}
-
 module "pihole" {
   count = 1
   depends_on = [ module.calico_cni ]
@@ -49,3 +42,20 @@ module "cert_manager" {
   source = "../../modules/cert_manager"
 }
 
+module "nginx-ingress-controller" {
+  count = 1
+  depends_on = [ module.calico_cni ]
+  source = "../../modules/nginx_ingress_controller"
+}
+
+module "vault" {
+  count = 1
+  depends_on = [ module.calico_cni ]
+  source = "../../modules/vault"
+}
+
+module "grafana" {
+  count = 1
+  depends_on = [ module.calico_cni ]
+  source = "../../modules/grafana"
+}

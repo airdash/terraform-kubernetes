@@ -1,3 +1,5 @@
+variable "cert_manager_issuer" { default = "letsencrypt-staging" }
+
 variable "domain" {
   type = string
 }
@@ -11,21 +13,13 @@ variable "metallb_address_pool" {
   default = "external-pool"
 }
 
+variable "name" {
+  type = string
+}
+
 variable "namespace" {
   type = string
   default = "default"
-}
-
-# variable "consul_service_name" {
-#   type = string
-# }
-# 
-# variable "k8s_service_name" {
-#   type = string
-# }
-
-variable "service_name" {
-  type = string
 }
 
 variable "http_listeners" { 

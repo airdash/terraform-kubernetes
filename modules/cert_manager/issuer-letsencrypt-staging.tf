@@ -1,12 +1,12 @@
-resource "kubernetes_manifest" "cert-manager-r53-issuer" {
-  count = 0
+resource "kubernetes_manifest" "cert-manager-r53-staging-issuer" {
+  count = 1
   depends_on = [ helm_release.cert_manager ]
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "ClusterIssuer"
     
     "metadata" = {
-      "name" = "letsencrypt"
+      "name" = "letsencrypt-staging"
     }
 
     "spec" = {

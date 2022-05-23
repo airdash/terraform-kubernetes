@@ -98,16 +98,3 @@ module "consul_service" {
   service_name = var.name
 }
 
-module "consul_api_gateway" {
-  source = "../../modules/consul_api_gateway"
-
-  domain = var.domain
-  hostname = var.name
-  metallb_address_pool = "external-pool"
-  service_name = var.name
-
-  http_listeners = [{
-    hostname = format("%s.%s", var.name, var.domain)
-    port = "80"
-  }]
-}

@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 virtualHost: pihole.sour.ninja
 
 persistentVolumeClaim:
@@ -15,18 +15,21 @@ serviceDns:
 
 serviceWeb:
   http:
-    enabled: false
+    enabled: true
   https:
     enabled: true
     port: 443
   type: ClusterIP
-  annotations:
-    metallb.universe.tf/address-pool: external-pool
-    external-dns.alpha.kubernetes.io/hostname: pihole.sour.ninja
 
 ingress:
   enabled: true
   ingressClassName: nginx
+  annotations:
+    metallb.universe.tf/address-pool: external-pool
+    external-dns.alpha.kubernetes.io/hostname: pihole.sour.ninja
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - pihole.sour.ninja
   tls:
     - secretName: pihole-certificate
       hosts:

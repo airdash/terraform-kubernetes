@@ -1,0 +1,8 @@
+injector:
+  enabled: false
+metrics:
+  enabled: false
+dataStorage:
+  storageClass: "nfs-dynamic"
+auditStorage:
+  storageClass: "nfs-dynamic"

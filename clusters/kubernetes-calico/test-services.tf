@@ -41,11 +41,14 @@ module "nginx_consul_api_route" {
 module "nginx_consul_test_gateway" {
   count = 1
   depends_on = [ module.consul ]
+  cert_manager_issuer = "letsencrypt-staging"
+  hostname = "nginx-shared-gateway"
+  domain   = "sour.ninja"
   source = "../../modules/consul_api_gateway"
 
   name = "nginx-test-shared-gateway"
   metallb_address_pool = "external-pool"
 
-  http_listeners  = local.http_listeners
-  https_listeners = local.https_listeners
+  listeners  = [{
+    
 }

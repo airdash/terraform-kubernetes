@@ -1,6 +1,6 @@
-variable "is_consul_gateway" { 
-  type = bool
-  default = false 
+variable "is_consul_gateway" {
+  type    = bool
+  default = false
 }
 
 variable "name" { default = "" }

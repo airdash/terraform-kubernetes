@@ -7,12 +7,12 @@ variable "hostname" {
 }
 
 variable "metallb_address_pool" {
-  type = string
+  type    = string
   default = "external-pool"
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "default"
 }
 
@@ -28,9 +28,14 @@ variable "service_name" {
   type = string
 }
 
-variable "backend_refs" { 
+variable "gateway" {
+  type    = string
+  default = "consul-api-gateway"
+}
+
+variable "rules" {
   type = set(object({
-    match = set(object({}))
+    matches     = set(object({}))
     backendRefs = set(object({}))
   }))
   default = []

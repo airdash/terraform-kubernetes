@@ -12,6 +12,9 @@ resource "kubernetes_manifest" "service_defaults" {
 
     spec = {
       "protocol" = "http"
+      "transparentProxy" = {
+        dialedDirectly = var.dialed_directly
+      }
     }
   }
 }

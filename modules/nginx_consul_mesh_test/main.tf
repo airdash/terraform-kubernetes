@@ -1,3 +1,7 @@
+locals {
+  use_nginx_ingress = var.use_nginx_ingress ? 1 : 0
+}
+
 resource "kubernetes_deployment" "nginx_deployment" {
   count = 1
 
@@ -12,7 +16,7 @@ resource "kubernetes_deployment" "nginx_deployment" {
 
     selector {
       match_labels = {
-        app     = var.name
+        app = var.name
       }
     }
 
@@ -74,7 +78,7 @@ resource "kubernetes_service" "nginx_service" {
 
   spec {
     selector = {
-      app     = var.name
+      app = var.name
     }
 
     # session_affinity = "ClientIP"
@@ -93,8 +97,46 @@ resource "kubernetes_service_account" "nginx_service_account" {
   }
 }
 
+resource "kubernetes_ingress_v1" "nginx_ingress" {
+  count = local.use_nginx_ingress
+
+  metadata {
+    annotations = {
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
+      "external-dns.alpha.kubernetes.io/hostname"  = format("%s.%s", var.name, "sour.ninja")
+      "cert-manager.io/cluster-issuer"             = "letsencrypt-staging"
+    }
+    name = format("%s-%s", var.name, "ingress")
+  }
+
+  spec {
+    ingress_class_name = var.nginx_ingress_class
+    tls {
+      hosts       = [format("%s.%s", var.name, "sour.ninja")]
+      secret_name = format("%s-%s", var.name, "tls")
+    }
+    rule {
+      host = format("%s.%s", var.name, "sour.ninja")
+      http {
+        path {
+          path = "/"
+          backend {
+            service {
+              name = var.name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 module "consul_service" {
-  source = "../../modules/consul_service"
-  service_name = var.name
+  source          = "../../modules/consul_service"
+  service_name    = var.name
+  dialed_directly = true
 }
 

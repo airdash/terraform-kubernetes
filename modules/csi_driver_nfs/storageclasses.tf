@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "nfs-retain-class" {
-  depends_on = [ helm_release.csi_driver_nfs ]
+  depends_on = [helm_release.csi_driver_nfs]
   manifest = {
 
     apiVersion = "storage.k8s.io/v1"
@@ -8,7 +8,7 @@ resource "kubernetes_manifest" "nfs-retain-class" {
     metadata = {
       name = "nfs-csi-retain"
     }
-    
+
     provisioner = "nfs.csi.k8s.io"
 
     parameters = {
@@ -27,7 +27,7 @@ resource "kubernetes_manifest" "nfs-retain-class" {
 }
 
 resource "kubernetes_manifest" "nfs-delete-class" {
-  depends_on = [ helm_release.csi_driver_nfs ]
+  depends_on = [helm_release.csi_driver_nfs]
   manifest = {
 
     apiVersion = "storage.k8s.io/v1"
@@ -36,7 +36,7 @@ resource "kubernetes_manifest" "nfs-delete-class" {
     metadata = {
       name = "nfs-csi-delete"
     }
-    
+
     provisioner = "nfs.csi.k8s.io"
 
     parameters = {

@@ -9,7 +9,7 @@ variable "hostname" {
 }
 
 variable "metallb_address_pool" {
-  type = string
+  type    = string
   default = "external-pool"
 }
 
@@ -18,39 +18,11 @@ variable "name" {
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "default"
 }
 
-variable "http_listeners" { 
-  type = set(object({
-    hostname = string
-    port = string
-  }))
-  default = []
-}
-
-variable "https_listeners" { 
-  type = set(object({
-    hostname = string
-    port = string
-    tls_certificate = string
-  }))
-  default = []
-}
-
-variable "tcp_listeners" { 
-  type = set(object({
-    hostname = string
-    port = string
-  }))
-  default = []
-}
-
-variable "udp_listeners" { 
-  type = set(object({
-    hostname = string
-    port = string
-  }))
+variable "listeners" {
+  type    = set(object({}))
   default = []
 }

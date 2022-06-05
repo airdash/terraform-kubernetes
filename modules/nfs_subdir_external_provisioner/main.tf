@@ -6,6 +6,6 @@ resource "helm_release" "nfs_subdir_external_provisioner" {
   version          = var.chart_version
   create_namespace = false
   cleanup_on_fail  = true
-  
-  values = [ file("${path.module}/values.yaml") ]
+
+  values = [file("${path.module}/values.yaml")]
 }

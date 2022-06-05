@@ -7,8 +7,8 @@ resource "kubernetes_manifest" "gateway" {
     "metadata" = {
       "annotations" = {
         "external-dns.alpha.kubernetes.io/hostname" = format("%s.%s", var.hostname, var.domain)
-        "metallb.universe.tf/address-pool" = var.metallb_address_pool
-        "metallb.universe.tf/allow-shared-ip" = var.name
+        "metallb.universe.tf/address-pool"          = var.metallb_address_pool
+        "metallb.universe.tf/allow-shared-ip"       = var.name
       }
 
       "name"      = format("%s-%s", var.name, "gateway")
@@ -17,7 +17,7 @@ resource "kubernetes_manifest" "gateway" {
 
     "spec" = {
       "gatewayClassName" = format("%s-%s", var.name, "gateway-class")
-      "listeners" = var.listeners
+      "listeners"        = var.listeners
     }
   }
 }
@@ -29,13 +29,13 @@ resource "kubernetes_manifest" "gateway_class_config" {
     "kind"       = "GatewayClassConfig"
 
     metadata = {
-      "name"      = format("%s-%s", var.name, "gateway-class-config")
+      "name" = format("%s-%s", var.name, "gateway-class-config")
     }
 
     spec = {
       "image" = {
         "consulAPIGateway" = "hashicorp/consul-api-gateway:0.2.0"
-        "envoy" = "envoyproxy/envoy:v1.22.0"
+        "envoy"            = "envoyproxy/envoy:v1.22.0"
       }
       "consul" = {
         "ports" = {
@@ -47,7 +47,7 @@ resource "kubernetes_manifest" "gateway_class_config" {
       }
 
       "copyAnnotations" = {
-        "service" = [ "external-dns.alpha.kubernetes.io/hostname", "metallb.universe.tf/address-pool", "metallb.universe.tf/allow-shared-ip" ]
+        "service" = ["external-dns.alpha.kubernetes.io/hostname", "metallb.universe.tf/address-pool", "metallb.universe.tf/allow-shared-ip"]
       }
 
       "logLevel"     = "debug"
@@ -64,7 +64,7 @@ resource "kubernetes_manifest" "gateway_class" {
     "kind"       = "GatewayClass"
 
     metadata = {
-      "name"       = format("%s-%s", var.name, "gateway-class")
+      "name" = format("%s-%s", var.name, "gateway-class")
     }
 
     spec = {

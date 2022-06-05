@@ -6,7 +6,7 @@ resource "helm_release" "metallb" {
   version          = var.chart_version
   create_namespace = false
   cleanup_on_fail  = true
-  
-  values = [ file("${path.module}/values.yaml") ]
+
+  values = [file("${path.module}/values.yaml")]
 }
 

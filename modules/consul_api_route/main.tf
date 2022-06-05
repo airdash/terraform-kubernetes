@@ -6,8 +6,6 @@ locals {
 }
 
 resource "kubernetes_manifest" "http_route" {
-  count = local.http_gateway_enabled
-
   manifest = {
 
     "apiVersion" = "gateway.networking.k8s.io/v1alpha2"
@@ -20,9 +18,9 @@ resource "kubernetes_manifest" "http_route" {
 
     spec = {
       "parentRefs" = [{
-        "name"      = local.gateway
+        "name" = local.gateway
       }]
-      "rules" = var.backendRefs
+      "rules" = var.rules
     }
   }
 }

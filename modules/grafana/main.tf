@@ -7,6 +7,6 @@ resource "helm_release" "grafana" {
   create_namespace = true
   cleanup_on_fail  = true
 
-  values = [ file("${path.module}/values.yaml") ]
+  values = [file("${path.module}/values.yaml")]
 }
 

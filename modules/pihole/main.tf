@@ -6,7 +6,7 @@ resource "helm_release" "pihole" {
   version          = var.chart_version
   create_namespace = true
   cleanup_on_fail  = true
-  values           = [ file("${path.module}/values.yaml") ]
+  values           = [file("${path.module}/values.yaml")]
 }
 
 # module "consul_api_gateway" {

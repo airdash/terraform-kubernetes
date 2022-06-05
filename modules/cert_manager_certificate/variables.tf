@@ -13,11 +13,11 @@ variable "name" {
 }
 
 variable "wildcard" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "namespace" {
-  type = string
+  type    = string
   default = "default"
 }

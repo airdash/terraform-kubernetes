@@ -1,17 +1,17 @@
 resource "kubernetes_manifest" "cert-manager-r53-staging-issuer" {
-  count = 1
-  depends_on = [ helm_release.cert_manager ]
+  count      = 1
+  depends_on = [helm_release.cert_manager]
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "ClusterIssuer"
-    
+
     "metadata" = {
       "name" = "letsencrypt-staging"
     }
 
     "spec" = {
       "acme" = {
-        "email" = "admin@sour.ninja"
+        "email"  = "admin@sour.ninja"
         "server" = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
         "privateKeySecretRef" = {
@@ -22,15 +22,15 @@ resource "kubernetes_manifest" "cert-manager-r53-staging-issuer" {
           "dns01" = {
             "route53" = {
               "accessKeyID" = "AKIA3TOJAXMR57CJZB3F"
-              "region" = "us-east-1"
+              "region"      = "us-east-1"
               "secretAccessKeySecretRef" = {
-                "key" = "secret-access-key"
+                "key"  = "secret-access-key"
                 "name" = "cert-manager-r53-secret"
               }
             }
           },
           "selector" = {
-            "dnsZones" = [ "sour.ninja" ]
+            "dnsZones" = ["sour.ninja"]
           }
         }]
       }

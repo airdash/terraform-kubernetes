@@ -1,12 +1,12 @@
 module "nginx_consul_mesh_test" {
   count      = 2
-  depends_on = [module.consul]
+  depends_on = [module.consul, module.nginx_ingress_controller_consul]
   source     = "../../modules/nginx_consul_mesh_test"
 
   name = "nginx-test-${count.index}"
 
   use_nginx_ingress   = true
-  nginx_ingress_class = "nginx-consul-test"
+  nginx_ingress_class = "ingress-nginx-consul"
 }
 
 # module "nginx_consul_ingress" {
@@ -16,15 +16,6 @@ module "nginx_consul_mesh_test" {
 # 
 #   name = "nginx-test-ingress-${count.index}"
 # }
-
-module "nginx_test_ingress_controller" {
-  count             = 1
-  name              = "nginx-consul-test"
-  namespace         = "default"
-  is_consul_gateway = true
-
-  source = "../../modules/nginx_ingress_controller"
-}
 
 module "nginx_consul_api_route" {
   count      = 0

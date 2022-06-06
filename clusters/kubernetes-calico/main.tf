@@ -42,10 +42,20 @@ module "cert_manager" {
   source     = "../../modules/cert_manager"
 }
 
-module "nginx-ingress-controller" {
-  count      = 0
+module "nginx_ingress_controller" {
+  count      = 1
   depends_on = [module.calico_cni]
   source     = "../../modules/nginx_ingress_controller"
+}
+
+module "nginx_ingress_controller_consul" {
+  count      = 1
+  depends_on = [module.calico_cni]
+
+  name = "ingress-nginx-consul"
+  namespace = "consul-system"
+  source     = "../../modules/nginx_ingress_controller"
+  is_consul_gateway  = true
 }
 
 module "vault" {

@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 virtualHost: pihole.sour.ninja
 
 persistentVolumeClaim:
@@ -23,9 +23,8 @@ serviceWeb:
 
 ingress:
   enabled: true
-  ingressClassName: nginx
+  ingressClassName: ingress-nginx
   annotations:
-    metallb.universe.tf/address-pool: external-pool
     external-dns.alpha.kubernetes.io/hostname: pihole.sour.ninja
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:

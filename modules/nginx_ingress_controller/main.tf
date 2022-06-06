@@ -2,32 +2,34 @@ locals {
   name   = length(var.name) > 0 ? var.name : "ingress-nginx"
   values = var.is_consul_gateway ? [local.consul_values] : [local.default_values]
   default_values = yamlencode({
+    "nameOverride" = local.name
     "controller" = {
-      "ingressClassByName" = "true"
+      "ingressClassByName" = true
       "ingressClassResource" = {
         "name"    = local.name
-        "enabled" = "true"
-        "default" = "false"
+        "enabled" = true
+        "default" = false
+        "controllerValue" = format("%s/%s", "k8s.io", local.name)
+
       }
     }
   })
 
   consul_values = yamlencode({
+    "nameOverride" = local.name
     "controller" = {
-      "admissionWebhooks" = {
-        "service" = {
-          "annotations" = {
-            "consul.hashicorp.com/service-ignore" = "true"
-          }
-        }
+      "labels" = {
+        "consul.hashicorp.com/service-ignore" = "true"
       }
 
-      "ingressClassByName" = "true"
+      "ingressClass" = local.name
+      "ingressClassByName" = true
 
       "ingressClassResource" = {
         "name"    = local.name
-        "enabled" = "true"
-        "default" = "false"
+        "enabled" = true
+        "default" = false
+        "controllerValue" = format("%s/%s", "k8s.io", local.name)
       }
 
       "podAnnotations" = {

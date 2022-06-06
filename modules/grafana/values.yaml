@@ -1,20 +1,49 @@
+podAnnotations:
+  consul.hashicorp.com/connect-inject: "true"
+  consul.hashicorp.com/transparent-proxy: "true"
+  consul.hashicorp.com/transparent-proxy-overwrite-probes: "false"
+
 grafana.ini:
   server:
-    domain: grafana.example.com
+    http_port: 3000
+    domain: grafana.sour.ninja
     serve_from_sub_path: false
+
 ingress:
   enabled: true
   annotations:
-    metallb.universe.tf/address-pool: external-pool
     external-dns.alpha.kubernetes.io/hostname: grafana.sour.ninja
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: "ingress-nginx-consul"
   hosts:
     - "grafana.sour.ninja"
   tls:
     - secretName: grafana-certificate
       hosts:
         - grafana.sour.ninja
+
+readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+
+livenessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 60
+  timeoutSeconds: 30
+  failureThreshold: 10
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations: {}
+  labels: {}
+  portName: service
+
 admin:
   existingSecret: grafana-admin-creds
 
